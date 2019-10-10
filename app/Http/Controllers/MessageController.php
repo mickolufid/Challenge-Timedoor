@@ -20,7 +20,7 @@ class MessageController extends Controller
     $userId = Auth::user() ? Auth::user()->id : "foo";
     if (count($getData) > 0) {
       foreach ($getData as $post) {
-        $date = strtotime($post->date);
+        $date      = strtotime($post->date);
         $date_post = date("d-m-Y", $date);
       }
     } else {
@@ -35,10 +35,10 @@ class MessageController extends Controller
     try {
 
       $validator = Validator::make($request->all(), [
-        'name' => 'required|min:3|max:16',
-        'title' => 'required|min:10|max:32',
-        'body' => 'required|min:10|max:200',
-        'image' => 'mimes:jpeg,jpg,png,gif|required',
+        'name'     => 'required|min:3|max:16',
+        'title'    => 'required|min:10|max:32',
+        'body'     => 'required|min:10|max:200',
+        'image'    => 'mimes:jpeg,jpg,png,gif|required',
         'password' => Auth::user() ? '' : 'required'
       ]);
 
@@ -58,14 +58,14 @@ class MessageController extends Controller
     $image = $request->image;
     $password_hash = Auth::user() ? Auth::user()->password : password_hash($request->password, PASSWORD_DEFAULT);
     // $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $dir_upload = "assets/img/";
-    $image_name = $image->getClientOriginalName();
-    $image_name = "img_" . round(microtime(true) * 1000) . $image->getClientOriginalName();
-    $image_size = $image->getClientSize();
+    $dir_upload      = "assets/img/";
+    $image_name      = $image->getClientOriginalName();
+    $image_name      = "img_" . round(microtime(true) * 1000) . $image->getClientOriginalName();
+    $image_size      = $image->getClientSize();
     $image_extension = $image->extension();
-    $image_hash = Crypt::encryptString($dir_upload . $image_name);
-    $date_now = date("Y-m-d");
-    $time_now = date("H:i");
+    $image_hash      = Crypt::encryptString($dir_upload . $image_name);
+    $date_now        = date("Y-m-d");
+    $time_now        = date("H:i");
 
     $getData = DB::table("messages")
       ->limit(10)
@@ -77,14 +77,14 @@ class MessageController extends Controller
         $upload = $image->move($dir_upload, $image_name);
         if ($upload) {
           $data = [
-            'name' => $name,
-            'id_akun' => $userId,
-            'title' => $title,
-            'body' => $body,
-            'image' => $image_hash,
+            'name'     => $name,
+            'id_akun'  => $userId,
+            'title'    => $title,
+            'body'     => $body,
+            'image'    => $image_hash,
             'password' => $password_hash,
-            'date' => $date_now,
-            'time' => $time_now
+            'date'     => $date_now,
+            'time'     => $time_now
 
           ];
           $insert = DB::table("messages")
@@ -117,18 +117,18 @@ class MessageController extends Controller
     }
     $ekstensi = ["jpg", "jpeg", "png", "gif"];
     $messages = [
-      "name" => $request->name,
+      "name"  => $request->name,
       "title" => $request->title,
-      "body" => $request->body,
+      "body"  => $request->body,
       "image" => $image
     ];
 
     if ($password_verify) {
       try {
         $validator = Validator::make($request->all(), [
-          'name' => 'required|min:3|max:16',
-          'title' => 'required|min:10|max:32',
-          'body' => 'required|min:10|max:200',
+          'name'     => 'required|min:3|max:16',
+          'title'    => 'required|min:10|max:32',
+          'body'     => 'required|min:10|max:200',
           //'image' => 'mimes:jpeg,jpg,png,gif|required',
           'password' => Auth::user() ? '' : 'required'
         ]);
@@ -159,9 +159,9 @@ class MessageController extends Controller
 
         return response()->json("success");
       } else {
-        $dir_upload = "assets/img/";
-        $image_name = $image->getClientOriginalName();
-        $image_size = $image->getClientSize();
+        $dir_upload      = "assets/img/";
+        $image_name      = $image->getClientOriginalName();
+        $image_size      = $image->getClientSize();
         $image_extension = $image->extension();
 
         try {
@@ -197,7 +197,7 @@ class MessageController extends Controller
   }
   public function deleteMessage(Request $request)
   {
-    $id = $request->id;
+    $id          = $request->id;
     $currentPost = DB::table("messages")->where("id", $id)->first();
     try {
       $path = public_path() . "/" . Crypt::decryptString($currentPost->image);
@@ -211,7 +211,7 @@ class MessageController extends Controller
   }
   public function checkPassword(Request $request)
   {
-    $id = $request->id;
+    $id          = $request->id;
     $currentPost = DB::table("messages")->where("id", $id)->first();
     if ($request->password && Auth::user()) {
       $password_verify = Auth::user()->password;

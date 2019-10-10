@@ -53,8 +53,8 @@ class RegisterController extends Controller
   protected function validator(array $data)
   {
     return Validator::make($data, [
-      'name' => ['required', 'string', 'max:255'],
-      'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+      'name'     => ['required', 'string', 'max:255'],
+      'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
       'password' => ['required', 'string', 'min:8', 'confirmed'],
     ]);
   }
@@ -68,8 +68,8 @@ class RegisterController extends Controller
   protected function create(array $data)
   {
     return User::create([
-      'name' => $data['name'],
-      'email' => $data['email'],
+      'name'     => $data['name'],
+      'email'    => $data['email'],
       'password' => Hash::make($data['password']),
     ]);
   }
@@ -81,12 +81,12 @@ class RegisterController extends Controller
   // }
   protected function detailRegister(Request $request)
   {
-    $name = $request->post("name");
-    $email = $request->post("email");
+    $name     = $request->post("name");
+    $email    = $request->post("email");
     $password = $request->post("password");
     $data = [
-      'name' => $name,
-      'email' => $email,
+      'name'     => $name,
+      'email'    => $email,
       'password' => $password
     ];
 
@@ -102,9 +102,9 @@ class RegisterController extends Controller
   }
   protected function successRegister(Request $request)
   {
-    $name = $request->post('name');
-    $email = $request->post('email');
-    $password = $request->post('password');
+    $name          = $request->post('name');
+    $email         = $request->post('email');
+    $password      = $request->post('password');
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     $cariAkun = DB::table("users")
@@ -113,17 +113,17 @@ class RegisterController extends Controller
       ->count();
     if ($cariAkun < 1) {
       $data = [
-        'nama' => $name,
-        'email' => $email,
+        'nama'     => $name,
+        'email'    => $email,
         'password' => $password_hash,
-        'level' => 1,
-        'status' => 0
+        'level'    => 1,
+        'status'   => 0
       ];
 
       $insertData = DB::table("users")
         ->insert($data);
       if ($insertData) {
-        $kodeAktifasi = base_convert(microtime(false), 16, 32);
+        $kodeAktifasi    = base_convert(microtime(false), 16, 32);
         $getDataTerakhir = DB::table("users")
           ->orderBy('id', 'desc')
           ->limit(1)
@@ -132,7 +132,7 @@ class RegisterController extends Controller
           $idAkun = $dataTerakhir->id;
         }
         $data2 = [
-          'id' => $kodeAktifasi,
+          'id'      => $kodeAktifasi,
           'id_akun' => $idAkun
         ];
 

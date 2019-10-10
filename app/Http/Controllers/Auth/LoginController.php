@@ -39,7 +39,7 @@ class LoginController extends Controller
   protected function functionLogin(Request $request)
   {
 
-    $email = $request->post("email");
+    $email    = $request->post("email");
     $password = $request->post("password");
 
 
@@ -48,7 +48,7 @@ class LoginController extends Controller
       ->get();
 
     foreach ($cariAkun as $data) {
-      $status = $data->status;
+      $status   = $data->status;
       $password = $data->password;
     }
     if ($cariAkun->count() < 1) {
