@@ -1,6 +1,7 @@
 @extends('layouts.user.layout')
 
 @section('content')
+
 <div class="section">
     <div class="container">
         <div class="row">
@@ -16,7 +17,7 @@
                         @guest
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                         @else
-                            <input type="text" name="name" class="form-control" value="{{ old('name') ?? Auth::user()->name }}">
+                            <input type="text" name="name" class="form-control" value="{{ old('name') ?? Auth::user()->nama }}">
                         @endguest
 
                         @if ($errors->has('name'))
@@ -105,7 +106,7 @@
                             </form>
                         @endif
                     @else
-                        @if ($bulletin->user_id === Auth::user()->id)
+                        @if ($bulletin->id_akun === Auth::user()->id)
                             <form action="" class="form-inline mt-50" method="post">
                                 @csrf
                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
