@@ -19,11 +19,11 @@ class DashboardController extends Controller
 
         if ($request->has('statusOption')) {
             if ($request->statusOption === 'on') {
-                $bulletins = Board::withoutTrashed();
+                $messages = Message::withoutTrashed();
             } elseif ($request->statusOption === 'delete') {
                 $messages = Message::onlyTrashed();
             } else {
-                $message = Message::withTrashed();                
+                $messages = Message::withTrashed();                
             }
         }
 

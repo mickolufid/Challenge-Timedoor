@@ -24,7 +24,7 @@ Route::post('/cek_password', 'MessageController@checkPassword')->name("checkPass
 
 Route::group(['middleware' => ['auth','role:2']], function(){
 	Route::get('/dashboard','DashboardController@index');
-	Route::post('/dashboard', 'AdminController@search')->name('dashboard');
+	Route::post('/dashboard', 'DashboardController@search')->name('dashboard');
 });
 
 
