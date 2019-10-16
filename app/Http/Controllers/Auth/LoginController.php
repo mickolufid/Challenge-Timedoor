@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -35,35 +39,31 @@ class LoginController extends Controller
   {
     $this->middleware('guest')->except('logout');
   }
-
+  
   protected function functionLogin(Request $request)
   {
+	$request->validate([
+		'email'    => ['required', 'string', 'email', 'max:255'],
+		'password' => ['required', 'string']
+	]);
 
-    $email    = $request->post("email");
-    $password = $request->post("password");
-
-
-    $cariAkun = DB::table("users")
-      ->where("email", "=", $email)
-      ->get();
-
-    foreach ($cariAkun as $data) {
-      $status   = $data->status;
-      $password = $data->password;
-    }
-    if ($cariAkun->count() < 1) {
-      $error = "Akun Tidak Terdaftar!";
-      return view("login", ["error" => $error]);
+    $email   	 = $request->post("email");
+    $password	 = $request->post("password");
+	$akun 		 = User::where("email", $email)->first();
+	if (!$akun) {
+		return redirect('/login')->with('error', 'Akun Tidak Terdaftar!');
     } else {
-      if ($status < 1) {
-        $error = "Akun Belum Aktifasi!";
-        return view("login", ["error" => $error]);
-      } else {
-        $password_verify = password_verify($password, $password);
-        if ($password_verify) {
-          echo "login berhasil";
+		if ($akun->status == 0) {
+			return redirect('/login')->with('error', 'Akun Belum Diverifikasi!');
+		} else {
+			$credentials = $request->only('email', 'password');
+			if (Auth::attempt($credentials)) {
+				return redirect()->intended('/');
+			} else {
+				return redirect('/login')->with('error', 'Error Email Or Password');
+			}
         }
-      }
-    }
+     }
+    
   }
 }

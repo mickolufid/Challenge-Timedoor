@@ -21,9 +21,9 @@ class CreateMessagesTable extends Migration
             $table->text('body');
             $table->text('image');
             $table->text('password');
-            $table->date('date')->nullable();
-            $table->string('time', 10);
-            $table->timestamps();
+           
+			$table->timestamps();
+			$table->dateTime('deleted_at')->nullable();
         });
     }
 

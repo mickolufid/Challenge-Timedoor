@@ -31,8 +31,8 @@ class Challenge30Mail extends Mailable
      */
     public function build()
     {
-        return $this->from("Challenge30@gmail.com")
-                    ->view("emailAktivasi")
+        return $this->from("jajang.umara@gmail.com")
+                    ->view("auth.emailAktivasi")
                     ->with(
                         [
                             'name' => $this->name,

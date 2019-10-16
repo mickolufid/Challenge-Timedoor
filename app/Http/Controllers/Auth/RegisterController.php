@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Activations;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail\MessageMail;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\RegisterRequest;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -59,45 +62,25 @@ class RegisterController extends Controller
     ]);
   }
 
-  /**
-   * Create a new user instance after a valid registration.
-   *
-   * @param  array  $data
-   * @return \App\User
-   */
-  protected function create(array $data)
-  {
-    return User::create([
-      'name'     => $data['name'],
-      'email'    => $data['email'],
-      'password' => Hash::make($data['password']),
-    ]);
-  }
-
-  // protected function register()
-  // {
-  //   //return "ss";
-  //   return view("auth.register");
-  // }
-  protected function detailRegister(Request $request)
+  
+  protected function detailRegister(RegisterRequest $request)
   {
     $name     = $request->post("name");
     $email    = $request->post("email");
     $password = $request->post("password");
+	
     $data = [
-      'name'     => $name,
-      'email'    => $email,
-      'password' => $password
+		'name'     => $name,
+		'email'    => $email,
+		'password' => $password
     ];
 
-    $searchEmail = DB::table("users")
-      ->where('email', '=', $email)
-      ->get()->count();
+    $searchEmail = User::where('email', '=', $email)->get()->count();
     if ($searchEmail < 1) {
-      return view('registerDetail', ['name' => $name, 'email' => $email, 'password' => $password]);
+		return view('auth.registerDetail', $data);
     } else {
-      $error = "Email has been registered!";
-      return view("register", ['error' => $error]);
+		$error = "Email has been registered!";
+		return view("auth.register", ['error' => $error]);
     }
   }
   protected function successRegister(Request $request)
@@ -105,73 +88,57 @@ class RegisterController extends Controller
     $name          = $request->post('name');
     $email         = $request->post('email');
     $password      = $request->post('password');
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    $password_hash = Hash::make($password);
 
-    $cariAkun = DB::table("users")
-      ->where("email", "=", $email)
-      ->get()
-      ->count();
-    if ($cariAkun < 1) {
-      $data = [
-        'nama'     => $name,
-        'email'    => $email,
-        'password' => $password_hash,
-        'level'    => 1,
-        'status'   => 0
-      ];
-
-      $insertData = DB::table("users")
-        ->insert($data);
-      if ($insertData) {
+	
+	$user = new User;
+	$user->nama  	= $name;
+    $user->email 	= $email;
+    $user->password  = $password_hash;
+    $user->level	= 1;
+    $user->status   = 0;
+	
+	if ($user->save()) {
         $kodeAktifasi    = base_convert(microtime(false), 16, 32);
-        $getDataTerakhir = DB::table("users")
-          ->orderBy('id', 'desc')
-          ->limit(1)
-          ->get();
-        foreach ($getDataTerakhir as $dataTerakhir) {
-          $idAkun = $dataTerakhir->id;
-        }
-        $data2 = [
-          'id'      => $kodeAktifasi,
-          'id_akun' => $idAkun
-        ];
-
-        $insertAktifasi = DB::table("activations")
-          ->insert($data2);
-
-        if ($insertAktifasi) {
+        
+		$activations = new Activations;
+		$activations->id = $kodeAktifasi;
+		$activations->id_akun = $user->id;
+		
+		if ($activations->save()) {
           try {
-
-            $kirimAktifasi = Mail::to($email)
-              ->send(new MessageMail($name, $kodeAktifasi));
+			$kirimAktifasi = Mail::to($email)
+				->send(new MessageMail($name, $kodeAktifasi));
             if (!$kirimAktifasi) {
-              return view("registerSuccess");
+				return view("auth.registerSuccess");
             } else {
-              return view("registerSuccess");
+				return view("auth.registerSuccess");
             }
           } catch (\Exception $error) {
             dd($error);
           }
         }
-      }
+      
     } else {
       return redirect("/register");
     }
   }
   public function activationAccount($activationCode)
   {
-    $cariAkun = DB::table("activations")
-      ->where('id', '=', $activationCode)
-      ->get();
-    if ($cariAkun) {
-      foreach ($cariAkun as $dataTerakhir) {
-        $idAkun = $dataTerakhir->id_akun;
-      }
-
-      $updateAccount = DB::table("users")
-        ->where('id', '=', $idAkun)
-        ->update(['status' => 1]);
-    }
-    return view("activationSuccess");
+	$activations = Activations::where('id',$activationCode)->first();
+	$created = new Carbon($activations->created_at);
+	$now = Carbon::now();
+	$difference = $now->diffInHours($created);
+	if ($difference > 24){
+		return "The Link has Expired";
+	}
+	if ($activations){
+		$user = User::find($activations->id_akun);
+		if ($user){
+			$user->status = 1;
+			$user->save();
+		}
+	}
+	return view("auth.activationSuccess");
   }
 }

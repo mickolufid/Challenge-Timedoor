@@ -4,23 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
     
+	use SoftDeletes;
+	
     protected $fillable = [
-        'name', 'title', 'body', 'password', 'image'
+        'name', 'title', 'body', 'password', 'image','id_akun'
     ];
+	
+	protected $dates    = ['deleted_at'];
 
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
+    
 
-    public function setPasswordAttribute($value)
-    {
-        if ($value !== null && $value !== '') {
-            $this->attributes['password'] = Hash::make($value);
-        }
-    }
+   
 }

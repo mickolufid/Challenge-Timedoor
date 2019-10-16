@@ -1,21 +1,6 @@
-<html>
-  <head>
-    <title>Timedoor Challenge - Level 8 | Register</title>
-    
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/tmdrPreset.css">
-    <!-- CSS End -->
-    
-    <!-- Javascript -->
-    <script type="text/javascript" src="assets/js/jquery.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-    <!-- Javascript End -->
-  </head>
-  
-  <body id="login">
-      <form action="/detailRegister" method="POST">
+@extends('layouts.user.layout')
+@section('content')
+      <form action="{{ Url('detailRegister') }}" method="POST">
         {{ csrf_field() }}
 
           <div class="box login-box">
@@ -27,24 +12,26 @@
                   @endif
                 </div>
                 <div class="login-box-body">
+                @error('name')
+                <p>{{$message}}</p>
+                @enderror
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name" name="name" required>
+                        <input type="text" class="form-control" value="" placeholder="Name" name="name">
+                    </div>
+                
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="E-mail" name="email">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="E-mail" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" name="password" required>
+                        <input type="password" class="form-control" placeholder="Password" name="password">
                     </div>
                 </div>
                 <div class="login-box-footer">
                     <div class="text-right">
-                        <a href="/" class="btn btn-default">Back</a>
+                        <a href="{{ Url('/') }}" class="btn btn-default">Back</a>
                         <button type="submit" class="btn btn-primary">Confirm</button>
                     </div>
                 </div>
             </div>
         </form>
-  </body>
-  
-</html>
+ @endsection

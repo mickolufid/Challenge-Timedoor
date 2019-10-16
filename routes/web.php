@@ -1,25 +1,30 @@
 <?php
 
-//Route::get('/', 'Challenge30Controller@index');
+Auth::routes();
+
 Route::get('/','MessageController@index');
-Route::post('/', 'MessageController@createMessage');
-Route::post('/edit_message', 'MessageController@editMessage')->name("editMessage");
-Route::post('/delete_message', 'MessageController@deleteMessage')->name("deleteMessage");
-// Route::resource('/', 'Challenge30Controller');
-Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
+Route::post('/message/store', 'MessageController@store')->name('home.store');
+Route::post('/delete', 'MessageController@delete')->name('home.delete');
+Route::post('/edit', 'MessageController@edit')->name('home.edit');
+Route::post('/destroy/{id}', 'MessageController@destroy')->name('home.destroy');
+Route::post('/update/{id}', 'MessageController@update')->name('home.update');
+
+
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/detailRegister', 'Auth\RegisterController@detailRegister');
 Route::post('/successRegister', 'Auth\RegisterController@successRegister');
 Route::get('/activationAccount/{activationCode}', 'Auth\RegisterController@activationAccount');
-Route::get('/login', 'Auth\LoginController@showLoginForm');
-Route::post('/login', 'Auth\LoginController@login');
-Route::get('/logout', function () {
-  Auth::logout();
-  return redirect("/");
-});
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@functionLogin')->name('loginSubmit');
+
+
 Route::post('/loginFunction', 'Auth\LoginController@functionLogin');
 Route::post('/cek_password', 'MessageController@checkPassword')->name("checkPassword");
 
 
-Auth::routes();
+Route::group(['middleware' => ['auth','role:2']], function(){
+	Route::get('/dashboard','DashboardController@index');
+	Route::post('/dashboard', 'AdminController@search')->name('dashboard');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+
