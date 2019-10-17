@@ -25,6 +25,10 @@ Route::post('/cek_password', 'MessageController@checkPassword')->name("checkPass
 Route::group(['middleware' => ['auth','role:2']], function(){
 	Route::get('/dashboard','DashboardController@index');
 	Route::post('/dashboard', 'DashboardController@search')->name('dashboard');
+	Route::post('/dashboard/delete/{id}', 'DashboardController@delete');
+	Route::post('/dashboard/delete-image/{id}', 'DashboardController@deleteImage');
+	Route::post('/dashboard/delete-multiply', 'DashboardController@deleteMultiply')->name('dashboard.deleteMultiply');
+	Route::post('/dashboard/restore/{id}', 'DashboardController@restore');
 });
 
 

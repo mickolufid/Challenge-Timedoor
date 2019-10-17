@@ -102,7 +102,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <form action="{{ route('dashboard') }}" method="POST" id="deleteMultiplyForm">
+                                <form action="{{ route('dashboard.deleteMultiply') }}" method="POST" id="deleteMultiplyForm">
                                     @csrf
                                     @foreach ($messages as $bulletin)
                                         @if ($bulletin->trashed())
@@ -270,7 +270,7 @@
             var id = $(this).parent().find("input[name='id']").val();
 
             $('#deleteModal').modal();
-            $('#submitDelete').attr('action', '/dashboard/delete/' + id);
+            $('#submitDelete').attr('action', '{{ Url("/dashboard/delete") }}/' + id);
         });
 
         $(".btn-restore").click(function(e) {
@@ -279,7 +279,7 @@
             var id = $(this).parent().find("input[name='id']").val();
 
             $('#restoreModal').modal();
-            $('#submitRestore').attr('action', '/dashboard/restore/' + id);
+            $('#submitRestore').attr('action', '{{ Url("/dashboard/restore") }}/' + id);
         });
 
         $(".btn-delete-image").click(function(e) {
@@ -288,7 +288,7 @@
             var id = $(this).parent().find("input[name='id']").val();
 
             $('#deleteImageModal').modal();
-            $('#submitDeleteImage').attr('action', '/dashboard/delete-image/' + id);
+            $('#submitDeleteImage').attr('action', '{{ Url("/dashboard/delete-image") }}/' + id);
         });
 
         $("#checkAllRecord").click(function(){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Message;
+use Illuminate\Support\Facades\File;
 
 class DashboardController extends Controller
 {
@@ -25,7 +26,9 @@ class DashboardController extends Controller
             } else {
                 $messages = Message::withTrashed();                
             }
-        }
+        } else {
+			$messages = new Message;
+		}
 
         if ($request->has('title') && !empty($request->title)) {
             $messages->where('title', 'like', "%{$request->title}%");
