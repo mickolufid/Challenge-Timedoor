@@ -91,18 +91,19 @@ class RegisterController extends Controller
     $password_hash = Hash::make($password);
 
 	
-	$user = new User;
-	$user->nama  	= $name;
-    $user->email 	= $email;
+  $user = new User;
+  
+	$user->nama  	     = $name;
+    $user->email 	   = $email;
     $user->password  = $password_hash;
-    $user->level	= 1;
-    $user->status   = 0;
+    $user->level	   = 1;
+    $user->status    = 0;
 	
 	if ($user->save()) {
         $kodeAktifasi    = base_convert(microtime(false), 16, 32);
         
-		$activations = new Activations;
-		$activations->id = $kodeAktifasi;
+		$activations          = new Activations;
+		$activations->id      = $kodeAktifasi;
 		$activations->id_akun = $user->id;
 		
 		if ($activations->save()) {
@@ -126,9 +127,9 @@ class RegisterController extends Controller
   public function activationAccount($activationCode)
   {
 	$activations = Activations::where('id',$activationCode)->first();
-	$created = new Carbon($activations->created_at);
-	$now = Carbon::now();
-	$difference = $now->diffInHours($created);
+	$created     = new Carbon($activations->created_at);
+	$now         = Carbon::now();
+	$difference  = $now->diffInHours($created);
 	if ($difference > 24){
 		return "The Link has Expired";
 	}

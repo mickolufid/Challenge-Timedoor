@@ -32,7 +32,7 @@ class MessageController extends Controller
         $input = $this->validate($request, [
             'name'     => 'nullable|between:3,16',
             'title'    => 'required|between:10,32',
-            'body'  => 'required|between:10,200',
+            'body'     => 'required|between:10,200',
             'image'    => 'mimes:jpg,jpeg,png,gif|max:1024',
             'password' => 'nullable|digits:4|numeric'
         ]);
@@ -198,21 +198,21 @@ class MessageController extends Controller
         $rules = [
             'editName'     => 'nullable|between:3,16',
             'editTitle'    => 'required|between:10,32',
-            'editBody'  	=> 'required|between:10,200',
+            'editBody'     => 'required|between:10,200',
             'editImage'    => 'mimes:jpg,jpeg,png,gif|max:1024'
         ];
 
         $messages = [
             'editName.between'  => 'name must be :min to :max characters long',
 
-            'editTitle.required' => 'title must be filled in',
-            'editTitle.between'  => 'title must be :min to :max characters long',
+            'editTitle.required'=> 'title must be filled in',
+            'editTitle.between' => 'title must be :min to :max characters long',
 
             'editBody.required' => 'message must be filled in',
             'editBody.between'  => 'message must be :min to :max characters long',
 
-            'editImage.mimes' => 'image is only valid :values',
-            'editImage.max'   => 'image is only valid 1MB or less'
+            'editImage.mimes'   => 'image is only valid :values',
+            'editImage.max'     => 'image is only valid 1MB or less'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -245,7 +245,7 @@ class MessageController extends Controller
             $record->update([
                 'name'    => $request->editName,
                 'title'   => $request->editTitle,
-                'body' => $request->editBody
+                'body'    => $request->editBody
             ]);
 
             return redirect()->back();

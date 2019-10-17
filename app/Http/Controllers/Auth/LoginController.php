@@ -49,7 +49,7 @@ class LoginController extends Controller
 
     $email   	 = $request->post("email");
     $password	 = $request->post("password");
-	$akun 		 = User::where("email", $email)->first();
+	  $akun 		 = User::where("email", $email)->first();
 	if (!$akun) {
 		return redirect('/login')->with('error', 'Akun Tidak Terdaftar!');
     } else {
