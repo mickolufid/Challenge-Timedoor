@@ -51,10 +51,10 @@ class LoginController extends Controller
     $password	 = $request->post("password");
 	  $akun 		 = User::where("email", $email)->first();
 	if (!$akun) {
-		return redirect('/login')->with('error', 'Akun Tidak Terdaftar!');
+		return redirect('/login')->with('error', 'Unregistered Account!');
     } else {
-		if ($akun->status == 0) {
-			return redirect('/login')->with('error', 'Akun Belum Diverifikasi!');
+		if ($akun->status == 'unverified') {
+			return redirect('/login')->with('error', 'Account Not Verified!');
 		} else {
 			$credentials = $request->only('email', 'password');
 			if (Auth::attempt($credentials)) {

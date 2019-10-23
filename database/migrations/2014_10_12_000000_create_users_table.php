@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('nama', 100);
             $table->string('email', 100);
             $table->text('password');
-            $table->tinyInteger('level');
-            $table->tinyInteger('status');
+            $table->text('level');
+            $table->text('status');
             $table->timestamps();
         });
     }

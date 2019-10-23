@@ -22,7 +22,7 @@ Route::post('/loginFunction', 'Auth\LoginController@functionLogin');
 Route::post('/cek_password', 'MessageController@checkPassword')->name("checkPassword");
 
 
-Route::group(['middleware' => ['auth','role:2']], function(){
+Route::group(['middleware' => ['auth','role:admin']], function(){
 	Route::get('/dashboard','DashboardController@index');
 	Route::post('/dashboard', 'DashboardController@search')->name('dashboard');
 	Route::post('/dashboard/delete/{id}', 'DashboardController@delete');

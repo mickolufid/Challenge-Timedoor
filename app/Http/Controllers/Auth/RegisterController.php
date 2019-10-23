@@ -96,8 +96,8 @@ class RegisterController extends Controller
 	$user->nama  	     = $name;
     $user->email 	   = $email;
     $user->password  = $password_hash;
-    $user->level	   = 1;
-    $user->status    = 0;
+    $user->level	   = 'user';
+    $user->status    = 'unverified';
 	
 	if ($user->save()) {
         $kodeAktifasi    = base_convert(microtime(false), 16, 32);
@@ -136,7 +136,7 @@ class RegisterController extends Controller
 	if ($activations){
 		$user = User::find($activations->id_akun);
 		if ($user){
-			$user->status = 1;
+			$user->status = 'verified';
 			$user->save();
 		}
 	}

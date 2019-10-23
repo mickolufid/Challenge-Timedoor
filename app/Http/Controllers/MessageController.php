@@ -17,7 +17,7 @@ class MessageController extends Controller
     {
 		
 		if (Auth::check()){
-			if (Auth::user()->level == 2){
+			if (Auth::user()->level == 'admin'){
 				return redirect('/dashboard');
 			}
 		}
@@ -61,15 +61,20 @@ class MessageController extends Controller
 
     public function passwordVerify($request, $record)
     {
+        return ['status' => true, 'errorMessage' => 'Your password is wrong', 'passwordField' => true];
+
         if (empty($record->password)) {
             return ['status' => false, 'errorMessage' => 'Your record is not set a password', 'passwordField' => false];
-        } else {
-            if (Hash::check($request->password, $record->password)) {
-                return ['status' => true, 'errorMessage' => 'Password is match', 'passwordField' => false];
-            }
         }
 
-        return ['status' => false, 'errorMessage' => 'Your password is wrong', 'passwordField' => true];
+        // } else {
+
+        //     if (Hash::check($request->password, $record->password)) {
+        //         return ['status' => true, 'errorMessage' => 'Password is match', 'passwordField' => false];
+        //     }
+        // }
+
+        // return ['status' => false, 'errorMessage' => 'Your password is wrong', 'passwordField' => true];
     }
     
     public function delete(Request $request) 
@@ -80,7 +85,7 @@ class MessageController extends Controller
             return abort(404);
         }
 
-        $passVerified = $this->passwordVerify($request, $record);
+        $passVerified = ['status'=>true]; //$this->passwordVerify($request, $record);
 
         if (isset($request->user_id)) {
             $request->user_id = (int) $request->user_id;
