@@ -13,7 +13,7 @@ Route::post('/update/{id}', 'MessageController@update')->name('home.update');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/detailRegister', 'Auth\RegisterController@detailRegister');
 Route::post('/successRegister', 'Auth\RegisterController@successRegister');
-Route::get('/activationAccount/{activationCode}', 'Auth\RegisterController@activationAccount');
+Route::get('/activation/{activationAccount}', 'Auth\RegisterController@activation');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@functionLogin')->name('loginSubmit');
 

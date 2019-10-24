@@ -100,16 +100,16 @@ class RegisterController extends Controller
     $user->status    = 'unverified';
 	
 	if ($user->save()) {
-        $kodeAktifasi    = base_convert(microtime(false), 16, 32);
+        $activationCode    = base_convert(microtime(false), 16, 32);
         
 		$activations          = new Activations;
-		$activations->id      = $kodeAktifasi;
+		$activations->id      = $activationCode;
 		$activations->id_account = $user->id;
 		
 		if ($activations->save()) {
           try {
 			$sendActivation = Mail::to($email)
-				->send(new MessageMail($name, $kodeAktifasi));
+				->send(new MessageMail($name, $activationCode));
             if (!$sendActivation) {
 				return view("auth.registerSuccess");
             } else {
@@ -124,9 +124,9 @@ class RegisterController extends Controller
       return redirect("/register");
     }
   }
-  public function activationAccount($activationCode)
+  public function activation($activationAccount)
   {
-	$activations = Activations::where('id',$activationCode)->first();
+	$activations = Activations::where('id',$activationAccount)->first();
 	$created     = new Carbon($activations->created_at);
 	$now         = Carbon::now();
 	$difference  = $now->diffInHours($created);

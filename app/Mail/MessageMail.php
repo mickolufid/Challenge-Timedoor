@@ -11,17 +11,17 @@ class MessageMail extends Mailable
 {
     use Queueable, SerializesModels;
     protected $name;
-    protected $kodeAktifasi;
+    protected $activationCode;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name, $kodeAktifasi)
+    public function __construct($name, $activationCode)
     {
         $this->name = $name;
-        $this->kodeAktifasi = $kodeAktifasi;
+        $this->activationCode = $activationCode;
     }
 
     /**
@@ -36,7 +36,7 @@ class MessageMail extends Mailable
                     ->with(
                         [
                             'name' => $this->name,
-                            'kodeAktifasi' => $this->kodeAktifasi
+                            'activationCode' => $this->activationCode
                         ]
                     );
     }
