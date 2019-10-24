@@ -12,7 +12,7 @@ class Message extends Model
 	use SoftDeletes;
 	
     protected $fillable = [
-        'name', 'title', 'body', 'password', 'image','id_akun'
+        'name', 'title', 'body', 'password', 'image','id_account'
     ];
 	
 	protected $dates    = ['deleted_at'];

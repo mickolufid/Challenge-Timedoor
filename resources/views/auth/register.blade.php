@@ -1,6 +1,6 @@
 @extends('layouts.user.layout')
 @section('content')
-      <form action="{{ Url('detailRegister') }}" method="POST">
+      <form action="/detailRegister" method="POST">
         {{ csrf_field() }}
 
           <div class="box login-box">

@@ -93,7 +93,7 @@ class RegisterController extends Controller
 	
   $user = new User;
   
-	$user->nama  	     = $name;
+	  $user->name	     = $name;
     $user->email 	   = $email;
     $user->password  = $password_hash;
     $user->level	   = 'user';
@@ -104,13 +104,13 @@ class RegisterController extends Controller
         
 		$activations          = new Activations;
 		$activations->id      = $kodeAktifasi;
-		$activations->id_akun = $user->id;
+		$activations->id_account = $user->id;
 		
 		if ($activations->save()) {
           try {
-			$kirimAktifasi = Mail::to($email)
+			$sendActivation = Mail::to($email)
 				->send(new MessageMail($name, $kodeAktifasi));
-            if (!$kirimAktifasi) {
+            if (!$sendActivation) {
 				return view("auth.registerSuccess");
             } else {
 				return view("auth.registerSuccess");
@@ -134,7 +134,7 @@ class RegisterController extends Controller
 		return "The Link has Expired";
 	}
 	if ($activations){
-		$user = User::find($activations->id_akun);
+		$user = User::find($activations->id_account);
 		if ($user){
 			$user->status = 'verified';
 			$user->save();
