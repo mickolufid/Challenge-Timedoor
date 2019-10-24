@@ -16,8 +16,8 @@ class CreateActivationsTable extends Migration
         Schema::create('activations', function (Blueprint $table) {
             $table->string('id');
             $table->primary('id');            
-            $table->unsignedBigInteger('id_akun');
-            $table->foreign('id_akun')
+            $table->unsignedBigInteger('id_account');
+            $table->foreign('id_account')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
             $table->timestamps();  

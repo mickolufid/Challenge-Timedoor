@@ -17,7 +17,7 @@
                         @guest
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                         @else
-                            <input type="text" name="name" class="form-control" value="{{ old('name') ?? Auth::user()->nama }}">
+                            <input type="text" name="name" class="form-control" value="{{ old('name') ?? Auth::user()->name }}">
                         @endguest
 
                         @if ($errors->has('name'))
@@ -81,7 +81,7 @@
                     <h4 class="mb-20">
                         {{ empty($bulletin->name) ? 'No name' : $bulletin->name }} 
                         @if(!is_null($bulletin->user_id))
-                           <span class="text-id">[ID:{{ $bulletin->id_akun }}]</span>
+                           <span class="text-id">[ID:{{ $bulletin->id_account }}]</span>
                         @endif
                     </h4>
                     <p>{!! nl2br(e($bulletin->body)) !!}</p>
@@ -93,7 +93,7 @@
                         @endif
                     </div>
                     @guest
-                        @if(is_null($bulletin->id_akun))
+                        @if(is_null($bulletin->id_account))
                             <form action="" class="form-inline mt-50" method="post">
                                 @csrf
                                 <div class="form-group mx-sm-3 mb-2">
@@ -106,7 +106,7 @@
                             </form>
                         @endif
                     @else
-                        @if ($bulletin->id_akun === Auth::user()->id)
+                        @if ($bulletin->id_account === Auth::user()->id)
                             <form action="" class="form-inline mt-50" method="post">
                                 @csrf
                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">

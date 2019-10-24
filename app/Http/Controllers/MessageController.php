@@ -52,7 +52,7 @@ class MessageController extends Controller
         }
 
         $input['password'] = $input['password'] ? Hash::make($input['password']) : '';
-        $input['id_akun']  = $request->user_id;
+        $input['id_account']  = $request->user_id;
 
         Message::create($input);
 
@@ -61,20 +61,20 @@ class MessageController extends Controller
 
     public function passwordVerify($request, $record)
     {
-        return ['status' => true, 'errorMessage' => 'Your password is wrong', 'passwordField' => true];
+        //return ['status' => true, 'errorMessage' => 'Your password is wrong', 'passwordField' => true];
 
         if (empty($record->password)) {
             return ['status' => false, 'errorMessage' => 'Your record is not set a password', 'passwordField' => false];
+        //}
+
+        } else {
+
+            if (Hash::check($request->password, $record->password)) {
+                return ['status' => true, 'passwordField' => false];
+            }
         }
 
-        // } else {
-
-        //     if (Hash::check($request->password, $record->password)) {
-        //         return ['status' => true, 'errorMessage' => 'Password is match', 'passwordField' => false];
-        //     }
-        // }
-
-        // return ['status' => false, 'errorMessage' => 'Your password is wrong', 'passwordField' => true];
+        return ['status' => false, 'errorMessage' => 'Your password is wrong', 'passwordField' => true];
     }
     
     public function delete(Request $request) 
@@ -85,12 +85,12 @@ class MessageController extends Controller
             return abort(404);
         }
 
-        $passVerified = ['status'=>true]; //$this->passwordVerify($request, $record);
+        $passVerified =$this->passwordVerify($request, $record);
 
         if (isset($request->user_id)) {
             $request->user_id = (int) $request->user_id;
 
-            if ($request->user_id === $record->id_akun) {
+            if ($request->user_id === $record->id_account) {
                 $passVerified['status'] = true;
             }
         }
@@ -120,7 +120,7 @@ class MessageController extends Controller
         if (isset($request->user_id)) {
             $request->user_id = (int) $request->user_id;
 
-            if ($request->user_id === $record->id_akun) {
+            if ($request->user_id === $record->id_account) {
                 $passVerified['status'] = true;
             }
         }
@@ -145,12 +145,12 @@ class MessageController extends Controller
             return abort(404);
         }
 
-        $passVerified = $this->passwordVerify($request, $record);
+        $passVerified = $this->passwordVerify($request, $record); 
 
         if (isset($request->user_id)) {
             $request->user_id = (int) $request->user_id;
 
-            if ($request->user_id === $record->id_akun) {
+            if ($request->user_id === $record->id_account) {
                 $passVerified['status'] = true;
             }
         }
@@ -181,12 +181,12 @@ class MessageController extends Controller
             return abort(404);
         }
 
-        $passVerified = $this->passwordVerify($request, $record);
+        $passVerified = $this->passwordVerify($request, $record); 
 
         if (isset($request->user_id)) {
             $request->user_id = (int) $request->user_id;
 
-            if ($request->user_id === $record->id_akun) {
+            if ($request->user_id === $record->id_account) {
                 $passVerified['status'] = true;
             }
         }
