@@ -139,23 +139,23 @@
                     @csrf
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="editName" value="{{ old('editName') ?? session('record.name') }}">
-                        @if ($errors->has('editName'))
-                            <p class="small text-danger mt-5">{{ $errors->first('editName') }}</p>
+                        <input type="text" class="form-control" name="Name" value="{{ old('Name') ?? session('record.name') }}">
+                        @if ($errors->has('Name'))
+                            <p class="small text-danger mt-5">{{ $errors->first('Name') }}</p>
                         @endif
                     </div>
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" id="editTitle" name="editTitle" value="{{ old('editTitle') ?? session('record.title') }}">
-                        @if ($errors->has('editTitle'))
-                            <p class="small text-danger mt-5">{{ $errors->first('editTitle') }}</p>
+                        <input type="text" class="form-control" id="Title" name="Title" value="{{ old('Title') ?? session('record.title') }}">
+                        @if ($errors->has('Title'))
+                            <p class="small text-danger mt-5">{{ $errors->first('Title') }}</p>
                         @endif
                     </div>
                     <div class="form-group">
                         <label>Body</label>
-                        <textarea rows="5" id="editBody" name="editBody" class="form-control">{{ old('editBody') ?? session('record.body') }}</textarea>
-                        @if ($errors->has('editBody'))
-                            <p class="small text-danger mt-5">{{ $errors->first('editBody') }}</p>
+                        <textarea rows="5" id="Body" name="Body" class="form-control">{{ old('Body') ?? session('record.body') }}</textarea>
+                        @if ($errors->has('Body'))
+                            <p class="small text-danger mt-5">{{ $errors->first('Body') }}</p>
                         @endif
                     </div>
                     <div class="form-group row">
@@ -172,12 +172,12 @@
                                 <input type="text" class="form-control upload-form" value="No file chosen" readonly>
                                 <span class="input-group-btn">
                                     <span class="btn btn-default btn-file">
-                                        <i class="fa fa-folder-open"></i>&nbsp;Browse <input type="file" id="newImage" name="editImage" multiple>
+                                        <i class="fa fa-folder-open"></i>&nbsp;Browse <input type="file" id="newImage" name="Image" multiple>
                                     </span>
                                 </span>
                             </div>
-                            @if ($errors->has('editImage'))
-                                <p class="small text-danger mt-5">{{ $errors->first('editImage') }}</p>
+                            @if ($errors->has('Image'))
+                                <p class="small text-danger mt-5">{{ $errors->first('Image') }}</p>
                             @endif
                             <div class="checkbox">
                                 <label>
