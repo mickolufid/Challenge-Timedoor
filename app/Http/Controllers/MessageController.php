@@ -47,11 +47,8 @@ class MessageController extends Controller
             $input['image'] = '';
         }
 
-        if (is_null($input['name'])) {
-            $input['name'] = '';
-        }
-
-        $input['password'] = $input['password'] ? Hash::make($input['password']) : '';
+        $input['name']        = $input['name'] ? $input['name'] : '';
+        $input['password']    = $input['password'] ? Hash::make($input['password']) : '';
         $input['id_account']  = $request->user_id;
 
         Message::create($input);
@@ -61,20 +58,25 @@ class MessageController extends Controller
 
     public function passwordVerify($request, $record)
     {
-        //return ['status' => true, 'errorMessage' => 'Your password is wrong', 'passwordField' => true];
-
         if (empty($record->password)) {
-            return ['status' => false, 'errorMessage' => 'Your record is not set a password', 'passwordField' => false];
-        //}
+            $status        = false;
+            $errorMessage  = 'Your record is not set a password';
+            $passwordField = false;
 
         } else {
 
             if (Hash::check($request->password, $record->password)) {
-                return ['status' => true, 'passwordField' => false];
+                $status        = true;
+                $errorMessage  = null;
+                $passwordField = false;
+            } else {
+                $status        = false;
+                $errorMessage  = 'Your password is wrong';
+                $passwordField = true;
             }
         }
 
-        return ['status' => false, 'errorMessage' => 'Your password is wrong', 'passwordField' => true];
+        return ['status' => $status, 'errorMessage' => $errorMessage, 'passwordField' => $passwordField];
     }
     
     public function delete(Request $request) 
