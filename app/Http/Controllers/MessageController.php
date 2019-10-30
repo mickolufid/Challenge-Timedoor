@@ -54,7 +54,7 @@ class MessageController extends Controller
     {
         if (empty($record->password)) {
             $status        = false;
-            $errorMessage  = 'Your record is not set a password';
+            $errorMessage  = 'Your record is not set password';
             $passwordField = false;
 
         } else {
