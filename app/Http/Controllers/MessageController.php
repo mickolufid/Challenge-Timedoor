@@ -15,12 +15,6 @@ class MessageController extends Controller
 {
     public function index()
     {
-		
-		if (Auth::check()){
-			if (Auth::user()->level == 'admin'){
-				return redirect('/dashboard');
-			}
-		}
         $messages = Message::latest()->paginate(10);
 
         return view('message.index', compact('messages'));
