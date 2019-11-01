@@ -22,7 +22,7 @@
                 <ul class="dropdown-menu">
                     <!-- User image -->
                     <li class="user-header">
-                        <img src="{{ asset('storage/images/messages/admin.png') }}" class="img-circle" alt="User Image">
+                        <img src="{{ asset('storage/images/admin/admin.png') }}" class="img-circle" alt="User Image">
                         <p>
                             {{ Auth::user()->name }}
                         </p>

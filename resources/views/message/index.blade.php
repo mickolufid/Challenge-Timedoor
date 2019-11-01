@@ -87,7 +87,7 @@
                     <p>{!! nl2br(e($bulletin->body)) !!}</p>
                     <div class="img-box my-10">
                         @if (empty($bulletin->image))
-                            <img class="img-responsive img-post" src="{{ asset('storage/images/messages/default.jpg') }}" alt="image">
+                            <img class="img-responsive img-post" src="{{ asset('storage/images/messages/default.png') }}" alt="image">
                         @else
                             <img class="img-responsive img-post" src="{{ asset('storage/images/messages/' . $bulletin->image) }}" alt="image">
                         @endif

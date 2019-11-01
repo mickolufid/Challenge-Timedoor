@@ -112,7 +112,7 @@
                                                 <td>{{ $bulletin->title }}</td>
                                                 <td>{{ $bulletin->message }}</td>
                                                 <td>  @if (empty($bulletin->image))
-                                                        <img class="img-prev" src="{{ asset('storage/images/messages/default.jpg') }}">
+                                                        <img class="img-prev" src="{{ asset('storage/images/messages/default.png') }}">
                                                     @else
                                                         <img class="img-prev" src="{{ asset('storage/images/messages/' . $bulletin->image) }}">
                                                         <input type="hidden" name="id" value="{{ $bulletin->id }}">
