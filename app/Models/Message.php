@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Message extends Model
 {
     
-	use SoftDeletes;
+     use SoftDeletes;
 	
     protected $fillable = [
         'name', 'title', 'body', 'password', 'image','id_account'
     ];
 	
-	protected $dates    = ['deleted_at'];
+    protected $dates    = ['deleted_at'];
 
     
 

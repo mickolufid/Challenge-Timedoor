@@ -139,23 +139,23 @@
                     @csrf
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="Name" value="{{ old('Name') ?? session('record.name') }}">
-                        @if ($errors->has('Name'))
-                            <p class="small text-danger mt-5">{{ $errors->first('Name') }}</p>
+                        <input type="text" class="form-control" name="name" value="{{ old('name') ?? session('record.name') }}">
+                        @if ($errors->has('name'))
+                            <p class="small text-danger mt-5">{{ $errors->first('name') }}</p>
                         @endif
                     </div>
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" id="Title" name="Title" value="{{ old('Title') ?? session('record.title') }}">
-                        @if ($errors->has('Title'))
-                            <p class="small text-danger mt-5">{{ $errors->first('Title') }}</p>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ old('title') ?? session('record.title') }}">
+                        @if ($errors->has('title'))
+                            <p class="small text-danger mt-5">{{ $errors->first('title') }}</p>
                         @endif
                     </div>
                     <div class="form-group">
                         <label>Body</label>
-                        <textarea rows="5" id="Body" name="Body" class="form-control">{{ old('Body') ?? session('record.body') }}</textarea>
-                        @if ($errors->has('Body'))
-                            <p class="small text-danger mt-5">{{ $errors->first('Body') }}</p>
+                        <textarea rows="5" id="body" name="body" class="form-control">{{ old('body') ?? session('record.body') }}</textarea>
+                        @if ($errors->has('body'))
+                            <p class="small text-danger mt-5">{{ $errors->first('body') }}</p>
                         @endif
                     </div>
                     <div class="form-group row">
@@ -172,12 +172,12 @@
                                 <input type="text" class="form-control upload-form" value="No file chosen" readonly>
                                 <span class="input-group-btn">
                                     <span class="btn btn-default btn-file">
-                                        <i class="fa fa-folder-open"></i>&nbsp;Browse <input type="file" id="newImage" name="Image" multiple>
+                                        <i class="fa fa-folder-open"></i>&nbsp;Browse <input type="file" id="newImage" name="image" multiple>
                                     </span>
                                 </span>
                             </div>
-                            @if ($errors->has('Image'))
-                                <p class="small text-danger mt-5">{{ $errors->first('Image') }}</p>
+                            @if ($errors->has('image'))
+                                <p class="small text-danger mt-5">{{ $errors->first('image') }}</p>
                             @endif
                             <div class="checkbox">
                                 <label>
