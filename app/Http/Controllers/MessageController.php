@@ -197,23 +197,23 @@ class MessageController extends Controller
         }
 
         $rules = [
-            'Name'     => 'nullable|between:3,16',
-            'Title'    => 'required|between:10,32',
-            'Body'     => 'required|between:10,200',
-            'Image'    => 'mimes:jpg,jpeg,png,gif|max:1024'
+            'name'     => 'nullable|between:3,16',
+            'title'    => 'required|between:10,32',
+            'body'     => 'required|between:10,200',
+            'image'    => 'mimes:jpg,jpeg,png,gif|max:1024'
         ];
 
         $messages = [
-            'Name.between'  => 'name must be :min to :max characters long',
+            'name.between'  => 'name must be :min to :max characters long',
 
-            'Title.required'=> 'title must be filled in',
-            'Title.between' => 'title must be :min to :max characters long',
+            'title.required'=> 'title must be filled in',
+            'title.between' => 'title must be :min to :max characters long',
 
-            'Body.required' => 'message must be filled in',
-            'Body.between'  => 'message must be :min to :max characters long',
+            'body.required' => 'message must be filled in',
+            'body.between'  => 'message must be :min to :max characters long',
 
-            'Image.mimes'   => 'image is only valid :values',
-            'Image.max'     => 'image is only valid 1MB or less'
+            'image.mimes'   => 'image is only valid :values',
+            'image.max'     => 'image is only valid 1MB or less'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -226,12 +226,12 @@ class MessageController extends Controller
                     'image' => ''
                 ]);
             } else {
-                if ($request->hasFile('Image')) {
+                if ($request->hasFile('image')) {
                     File::delete('storage/images/messages/' . $record->image);
 
-                    $name = Str::random(40) . '.' . $request->Image->getClientOriginalExtension();
+                    $name = Str::random(40) . '.' . $request->image->getClientOriginalExtension();
 
-                    $request->Image->storeAs('images/messages', $name, 'public');
+                    $request->image->storeAs('images/messages', $name, 'public');
 
                     $record->update([
                         'image' => $name
@@ -239,14 +239,14 @@ class MessageController extends Controller
                 }
             }
 
-            if (is_null($request->Name)) {
-                $request->Name = '';
+            if (is_null($request->name)) {
+                $request->name = '';
             }
 
             $record->update([
-                'name'    => $request->Name,
-                'title'   => $request->Title,
-                'body'    => $request->Body
+                'name'    => $request->name,
+                'title'   => $request->title,
+                'body'    => $request->body
             ]);
 
             return redirect()->back();
