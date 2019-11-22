@@ -163,7 +163,7 @@
                             @if (empty(session('record.image')))
                                 <img class="img-responsive" src="{{ asset('storage/images/messages/default.jpg') }}" alt="image">
                             @else
-                                <img class="img-responsive" src="{{ asset('storage/images/messages/' . session('record.image')) }}" alt="image">
+                                <img class="img-responsive" src="{{ asset('storage/images/messages/thumb/' . session('record.image')) }}" alt="image">
                             @endif
                         </div>
                         <div class="col-md-8 pl-0">

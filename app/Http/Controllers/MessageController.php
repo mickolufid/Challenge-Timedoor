@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Image;
 use Auth;
 
 use App\Models\Message;
@@ -33,8 +34,13 @@ class MessageController extends Controller
 
         if ($request->hasFile('image')) {
             $name = Str::random(40) . '.' . $request->image->getClientOriginalExtension();
-
-            $request->image->storeAs('images/messages', $name, 'public');
+            $file = $request->file('image');
+            $thumb = Image::make($file->getRealPath())->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+            });
+            $destinationPath = public_path('/storage/images/messages/');
+            $file->move($destinationPath, $name);
+            $thumb->save($destinationPath.'thumb/'.$name);
 
             $input['image'] = $name;
         } else {
