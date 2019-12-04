@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Support\Facades\File;
 
@@ -59,7 +60,7 @@ class DashboardController extends Controller
             File::delete('storage/images/messages/' . $record->image);
 
             $record->update([
-                'image' => ''
+                'image' => null
             ]);
         }
 
@@ -80,7 +81,7 @@ class DashboardController extends Controller
                     File::delete('storage/images/messages/' . $record->image);
         
                     $record->update([
-                        'image' => ''
+                        'image' => null
                     ]);
                 }
 

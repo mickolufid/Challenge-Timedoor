@@ -7,12 +7,12 @@ use App\Http\Middleware\CheckAdmin;
 Auth::routes();
 
 Route::group(['middleware' => ['checkMember']], function () {
-    Route::get('/','MessageController@index');
-	Route::post('/message/store', 'MessageController@store')->name('home.store');
-	Route::post('/delete', 'MessageController@delete')->name('home.delete');
-	Route::post('/edit', 'MessageController@edit')->name('home.edit');
-	Route::post('/destroy/{id}', 'MessageController@destroy')->name('home.destroy');
-	Route::post('/update/{id}', 'MessageController@update')->name('home.update');
+    Route::get('/','Users\MessageController@index');
+	Route::post('/message/store', 'Users\MessageController@store')->name('home.store');
+	Route::post('/delete', 'Users\MessageController@delete')->name('home.delete');
+	Route::post('/edit', 'Users\MessageController@edit')->name('home.edit');
+	Route::post('/destroy/{id}', 'Users\MessageController@destroy')->name('home.destroy');
+	Route::post('/update/{id}', 'Users\MessageController@update')->name('home.update');
 });
 
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -24,16 +24,16 @@ Route::post('/login', 'Auth\LoginController@functionLogin')->name('loginSubmit')
 
 
 Route::post('/loginFunction', 'Auth\LoginController@functionLogin');
-Route::post('/cek_password', 'MessageController@checkPassword')->name("checkPassword");
+Route::post('/cek_password', 'Users\MessageController@checkPassword')->name("checkPassword");
 
 
 Route::group(['middleware' => ['auth','checkAdmin']], function(){
-	Route::get('/dashboard','DashboardController@index');
-	Route::post('/dashboard', 'DashboardController@search')->name('dashboard');
-	Route::post('/dashboard/delete/{id}', 'DashboardController@delete');
-	Route::post('/dashboard/delete-image/{id}', 'DashboardController@deleteImage');
-	Route::post('/dashboard/delete-multiply', 'DashboardController@deleteMultiply')->name('dashboard.deleteMultiply');
-	Route::post('/dashboard/restore/{id}', 'DashboardController@restore');
+	Route::get('/dashboard','Admin\DashboardController@index');
+	Route::post('/dashboard', 'Admin\DashboardController@search')->name('dashboard');
+	Route::post('/dashboard/delete/{id}', 'Admin\DashboardController@delete');
+	Route::post('/dashboard/delete-image/{id}', 'Admin\DashboardController@deleteImage');
+	Route::post('/dashboard/delete-multiply', 'Admin\DashboardController@deleteMultiply')->name('dashboard.deleteMultiply');
+	Route::post('/dashboard/restore/{id}', 'Admin\DashboardController@restore');
 });
 
 

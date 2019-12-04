@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,7 @@ class MessageController extends Controller
     {
         $messages = Message::latest()->paginate(10);
 
-        return view('message.index', compact('messages'));
+        return view('users.message.index', compact('messages'));
     }
 
     public function store(Request $request)
