@@ -83,7 +83,7 @@ class DashboardController extends Controller
                     $record->update([
                         'image' => null
                     ]);
-                }
+                }   
 
                 $record->delete();
             }
