@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
 		$messages = Message::withTrashed()->latest()->paginate(20);
-        return view('admin.index',compact('messages'));
+        return view('admin.dashboard.index',compact('messages'));
     }
 	
 	public function search(Request $request)
@@ -30,7 +30,6 @@ class DashboardController extends Controller
         } else {
 			$messages = new Message;
 		}
-
         if ($request->has('title') && !empty($request->title)) {
             $messages->where('title', 'like', "%{$request->title}%");
         }

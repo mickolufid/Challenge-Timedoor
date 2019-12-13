@@ -47,16 +47,16 @@
 <body class="hold-transition skin sidebar-mini">
     <div class="wrapper">
         <header class="main-header">
-            @include('layouts.admin.header')
+            @include('admin.layouts.header')
         </header>
         <aside class="main-sidebar">
-            @include('layouts.admin.menu')
+            @include('admin.layouts.menu')
         </aside>
         <main>
             @yield('content')
         </main>
         <footer class="main-footer">
-            @include('layouts.admin.footer')
+            @include('admin.layouts.footer')
         </footer>
 
        

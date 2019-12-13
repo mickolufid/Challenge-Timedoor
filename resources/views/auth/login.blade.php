@@ -1,4 +1,4 @@
-@extends('layouts.user.layout')
+@extends('users.layouts.layout')
 @section('content')
   <form action="{{ route('loginSubmit') }}" method="POST">
     {{ csrf_field() }}

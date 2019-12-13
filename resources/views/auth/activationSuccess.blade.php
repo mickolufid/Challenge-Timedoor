@@ -1,4 +1,4 @@
-@extends('layouts.user.layout')
+@extends('user.layouts.layout')
 @section('content')
     <div class="box login-box">
       <div class="login-box-head">
