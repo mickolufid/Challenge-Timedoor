@@ -21,7 +21,7 @@ class CheckMember
         {
             // if user level is not user redirect to dashboard
             if (Auth::user()->level != 'user') {
-                return redirect('dashboard');
+                return redirect('admin');
             }
         }
 

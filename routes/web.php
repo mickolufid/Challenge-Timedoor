@@ -28,12 +28,12 @@ Route::post('/cek_password', 'Users\MessageController@checkPassword')->name("che
 
 
 Route::group(['middleware' => ['auth','checkAdmin']], function(){
-	Route::get('/dashboard','Admin\DashboardController@index');
-	Route::post('/dashboard', 'Admin\DashboardController@search')->name('dashboard');
-	Route::post('/dashboard/delete/{id}', 'Admin\DashboardController@delete');
-	Route::post('/dashboard/delete-image/{id}', 'Admin\DashboardController@deleteImage');
-	Route::post('/dashboard/delete-multiply', 'Admin\DashboardController@deleteMultiply')->name('dashboard.deleteMultiply');
-	Route::post('/dashboard/restore/{id}', 'Admin\DashboardController@restore');
+	Route::get('/admin','Admin\DashboardController@index');
+	Route::post('/admin', 'Admin\DashboardController@search')->name('dashboard');
+	Route::post('/admin/delete/{id}', 'Admin\DashboardController@delete');
+	Route::post('/admin/delete-image/{id}', 'Admin\DashboardController@deleteImage');
+	Route::post('/admin/delete-multiply', 'Admin\DashboardController@deleteMultiply')->name('dashboard.deleteMultiply');
+	Route::post('/admin/restore/{id}', 'Admin\DashboardController@restore');
 });
 
 
